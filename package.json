@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:zip": "vite build && cd dist && zip -r ../dist.zip . && cd .."
   },
   "devDependencies": {
+    "@biomejs/biome": "2.3.8",
     "vite": "^7.2.4"
   }
 }
