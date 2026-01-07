@@ -1,24 +1,45 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import "./styles/base.css";
+import { sdk } from "@/sdk";
+import { initPreview } from "./preview-modal.js";
+import { initJsonTest } from "./jsonLoadTest.js";
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+// Example: listen for keyboard events from parent
+sdk.on("keyboardPressed", ({ key }) => {
+	console.log("Key pressed:", key);
+});
 
-setupCounter(document.querySelector('#counter'))
+// Temporary resize test - remove after testing
+function initResizeTest() {
+	const placeholder = document.querySelector(".js-resize-placeholder");
+	if (!placeholder) return;
+
+	placeholder.style.transition = "height 0.3s ease";
+
+	let expanded = false;
+
+	const toggle = () => {
+		expanded = !expanded;
+		placeholder.style.height = expanded ? "100vh" : "100px";
+	};
+
+	setInterval(toggle, 2000);
+}
+
+// Initialize on DOM ready
+if (document.readyState === "loading") {
+	document.addEventListener("DOMContentLoaded", () => {
+		// Preview modal only in dev mode
+		if (import.meta.env.DEV) {
+			initPreview();
+		}
+		initResizeTest();
+		initJsonTest();
+	});
+} else {
+	// Preview modal only in dev mode
+	if (import.meta.env.DEV) {
+		initPreview();
+	}
+	initResizeTest();
+	initJsonTest();
+}

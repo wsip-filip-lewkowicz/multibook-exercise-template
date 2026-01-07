@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pl">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -12,6 +12,39 @@
       href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css" />
   </head>
   <body>
+    <main>
+
+      <div class="c-header">
+        <div class="c-header_inner">
+          <span class="c-header_icon c-icon">
+            <i class="ph-bold ph-puzzle-piece"></i>
+          </span>
+          
+          <span class="c-header_title t-heading-2">
+            Przeciągnij brakujące fragmenty ilustracji w odpowiednie miejsca. Opowiedz, co przedstawia ilustracja.
+          </span>
+        </div>
+
+        <div class="c-header_actions">
+          <button class="js-modal-close c-btn c-btn--icon c-btn--ghost" data-modal-close><i class="ph-bold ph-x"></i></button>
+        </div>
+
+      </div>
+      <h3>Hello World</h3>
+      
+      <button data-page="2">Go To Page 2</button>
+      <button data-page="5">Go To Page 5</button>
+      <button data-page="10">Go To Page 10</button>
+      
+      
+      <h3>Img test</h3>
+      <img src="/img/test.png"  style="width: 400px; "/>
+
+      <h3>JSON test</h3>
+      <div class="js-json-test"></div>
+      <h3>Resize test</h3>
+      <div class="js-resize-placeholder" style="height: 100px; width: 300px; background-color:pink;"></div>
+    </main>
     <script src="/iframeResizer.contentWindow.min.js"></script>
     <script type="module" src="/src/main.js"></script>
   </body>
