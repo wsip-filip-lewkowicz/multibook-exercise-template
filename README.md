@@ -81,6 +81,16 @@ iframe.contentWindow.postMessage({
 }, "*");
 ```
 
+## Required Scripts
+
+The iframe resizer script must be included in `index.html`:
+
+```html
+<script src="/iframeResizer.contentWindow.min.js"></script>
+```
+
+This enables automatic height synchronization with the parent window.
+
 ## Development
 
 ```bash

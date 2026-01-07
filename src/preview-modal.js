@@ -56,7 +56,6 @@ function createModalElements() {
 	modalOverlay.className = "modal-overlay";
 	modalOverlay.innerHTML = `
 		<div class="modal modal--${currentSize}">
-			<div class="modal--toolbar-placeholder"></div>
 			<div class="modal__body"></div>
 		</div>
 	`;

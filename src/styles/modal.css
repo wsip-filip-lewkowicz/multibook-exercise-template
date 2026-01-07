@@ -198,8 +198,3 @@
 .c-header_actions .c-btn {
     border-radius: 999px;
 }
-
-.modal--toolbar-placeholder {
-    height: 48px;
-    width: min(400px);
-}

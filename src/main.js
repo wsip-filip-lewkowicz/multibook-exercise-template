@@ -8,23 +8,6 @@ sdk.on("keyboardPressed", ({ key }) => {
 	console.log("Key pressed:", key);
 });
 
-// Temporary resize test - remove after testing
-function initResizeTest() {
-	const placeholder = document.querySelector(".js-resize-placeholder");
-	if (!placeholder) return;
-
-	placeholder.style.transition = "height 0.3s ease";
-
-	let expanded = false;
-
-	const toggle = () => {
-		expanded = !expanded;
-		placeholder.style.height = expanded ? "100vh" : "100px";
-	};
-
-	setInterval(toggle, 2000);
-}
-
 // Initialize on DOM ready
 if (document.readyState === "loading") {
 	document.addEventListener("DOMContentLoaded", () => {
@@ -32,7 +15,6 @@ if (document.readyState === "loading") {
 		if (import.meta.env.DEV) {
 			initPreview();
 		}
-		initResizeTest();
 		initJsonTest();
 	});
 } else {
@@ -40,6 +22,5 @@ if (document.readyState === "loading") {
 	if (import.meta.env.DEV) {
 		initPreview();
 	}
-	initResizeTest();
 	initJsonTest();
 }
