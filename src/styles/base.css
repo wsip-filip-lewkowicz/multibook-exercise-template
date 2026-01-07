@@ -1,0 +1,54 @@
+@import "@phosphor-icons/web/light";
+
+@import './fonts.css';
+@import './typography.css';
+@import './modal.css';
+@import './btn.css';
+
+:root {
+    --preview-modal-sm: 400px;
+    --preview-modal-default: 600px;
+    --preview-modal-large: 900px;
+    --preview-modal-fullscreen: calc(100vw - 32px);
+    --preview-modal-height-fullscreen: calc(100vh - 32px);
+
+
+    --color-white: #FFFFFF;
+
+    --color-primary-100: #E6EFF9;
+    --color-primary-500: #005ABE;
+
+    --color-text: #1A1F25;
+    --color-gray-700: #3D4855;
+    --color-gray-900: #1A1F25;
+
+    --font-family: 'Silka', sans-serif;
+
+    --btn-size: 40px;
+    --icon-size: 48px;
+  }
+
+  html {
+    font-family: var(--font-family);
+    color: var(--color-text);
+  }
+
+  .c-icon {
+    width: var(--icon-size);
+    aspect-ratio: 1/1;
+
+    flex-shrink: 0;
+
+    background-color: var(--color-primary-100);
+    color: var(--color-primary-500);
+    
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.c-icon i { 
+    font-size: 0.4em;
+}
+

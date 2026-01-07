@@ -1,0 +1,222 @@
+/* ==========================================================================
+   Button Component - BEM
+   ========================================================================== */
+
+/* Block: .c-btn */
+.c-btn {
+    /* Base styles */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: var(--font-family);
+    transition: all 0.2s ease;
+    outline: none;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: none;
+    
+    /* Default size */
+    height: var(--btn-size);
+    padding: 8px 16px;
+  }
+  
+  /* Disabled state */
+  .c-btn:disabled,
+  .c-btn--disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  
+  /* Icon inside button */
+  .c-btn svg {
+    pointer-events: none;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Focus visible state */
+  .c-btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(0, 90, 190, 0.3);
+  }
+  
+  /* ==========================================================================
+     Modifiers: Variants
+     ========================================================================== */
+  
+  /* Default/Primary variant */
+  .c-btn--primary {
+    background-color: var(--color-primary-500);
+    color: var(--color-white);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .c-btn--primary:hover {
+    background-color: rgba(0, 90, 190, 0.9);
+  }
+  
+  /* Secondary variant */
+  .c-btn--secondary {
+    background-color: var(--color-primary-100);
+    color: var(--color-text);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .c-btn--secondary:hover {
+    background-color: rgba(230, 239, 249, 0.8);
+  }
+  
+  /* Outline variant */
+  .c-btn--outline {
+    background-color: var(--color-white);
+    color: var(--color-text);
+    border: 1px solid var(--color-primary-100);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .c-btn--outline:hover {
+    background-color: var(--color-primary-100);
+    color: var(--color-primary-500);
+  }
+  
+  /* Ghost variant */
+  .c-btn--ghost {
+    background-color: transparent;
+    color: var(--color-text);
+  }
+  
+  .c-btn--ghost:hover {
+    background-color: var(--color-primary-100);
+    color: var(--color-primary-500);
+  }
+  
+  /* Link variant */
+  .c-btn--link {
+    background-color: transparent;
+    color: var(--color-primary-500);
+    text-underline-offset: 4px;
+    padding: 0;
+    height: auto;
+  }
+  
+  .c-btn--link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Destructive variant */
+  .c-btn--destructive {
+    background-color: #dc2626;
+    color: var(--color-white);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .c-btn--destructive:hover {
+    background-color: rgba(220, 38, 38, 0.9);
+  }
+  
+  .c-btn--destructive:focus-visible {
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+  }
+  
+  /* ==========================================================================
+     Modifiers: Sizes
+     ========================================================================== */
+  
+  /* Small */
+  .c-btn--sm {
+    height: 32px;
+    padding: 4px 12px;
+    gap: 6px;
+    font-size: 13px;
+  }
+  
+  .c-btn--sm:has(> svg) {
+    padding: 4px 10px;
+  }
+  
+  /* Large */
+  .c-btn--lg {
+    height: 44px;
+    padding: 8px 24px;
+  }
+  
+  .c-btn--lg:has(> svg) {
+    padding: 8px 16px;
+  }
+  
+  /* Icon only */
+  .c-btn--icon {
+    width: var(--btn-size);
+    height: var(--btn-size);
+    padding: 0;
+  }
+  
+  .c-btn--icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+
+  
+  /* ==========================================================================
+     Elements
+     ========================================================================== */
+  
+  /* Button icon element */
+  .c-btn__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  /* Button text element */
+  .c-btn__text {
+    display: inline-block;
+  }
+  
+  /* Button with icon adjustments */
+  .c-btn:has(> svg):not(.c-btn--icon) {
+    padding-left: 12px;
+  }
+
+/*
+  <!-- Primary button (default) -->
+<button class="c-btn c-btn--primary">Zapisz</button>
+
+<!-- Secondary button -->
+<button class="c-btn c-btn--secondary">Anuluj</button>
+
+<!-- Outline button -->
+<button class="c-btn c-btn--outline">Szczegóły</button>
+
+<!-- Ghost button -->
+<button class="c-btn c-btn--ghost">Opcje</button>
+
+<!-- Link button -->
+<button class="c-btn c-btn--link">Dowiedz się więcej</button>
+
+<!-- Small button -->
+<button class="c-btn c-btn--primary c-btn--sm">Mały</button>
+
+<!-- Large button -->
+<button class="c-btn c-btn--primary c-btn--lg">Duży</button>
+
+<!-- Icon only button -->
+<button class="c-btn c-btn--ghost c-btn--icon">
+  <svg>...</svg>
+</button>
+
+<!-- Button with icon -->
+<button class="c-btn c-btn--primary">
+  <svg>...</svg>
+  <span class="c-btn__text">Z ikoną</span>
+</button>
+
+<!-- Disabled button -->
+<button class="c-btn c-btn--primary" disabled>Niedostępny</button> */
