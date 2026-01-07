@@ -173,8 +173,8 @@
   }
 
 .c-header_icon.c-icon {
-    width: clamp(36px, 4vw, var(--icon-size));
-    font-size: clamp(36px, 4vw, var(--icon-size));
+    width: var(--icon-size);
+    font-size: var(--icon-size);
 }
   
 .c-header_inner {

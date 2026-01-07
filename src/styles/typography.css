@@ -1,20 +1,25 @@
+.t-heading-1, 
+.t-heading-2,
+.t-heading-3 {
+    font-weight: 500;
+    color: var(--color-gray-900);
+
+}
+
+.t-heading-1, 
+.t-heading-2 {
+    line-height: 1.2;
+}
+
 .t-heading-1 {
     font-size: 24px;
-    font-weight: 500;
-    line-height: 1.2;
-    color: var(--color-gray-900);
 }
 
 .t-heading-2 {
-    font-size: clamp(16px, 2vw, 22px);
-    font-weight: 500;
+    font-size: 22px;
     line-height: 1.45;
-    color: var(--color-gray-900);
 }
 
 .t-heading-3 {
     font-size: 18px;
-    font-weight: 500;
-    line-height: 1.2;
-    color: var(--color-gray-900);
 }
