@@ -93,6 +93,8 @@ This enables automatic height synchronization with the parent window.
 
 ## Development
 
+Skopiuj `.env.example` do `.env` (usuń `.example` z nazwy) i uzupełnij wymagane wartości.
+
 ```bash
 pnpm install
 pnpm dev
@@ -112,7 +114,16 @@ pnpm build
 
 Output in `dist/` folder.
 
+### Upload
 
+Przed wrzuceniem projektu zbuduj archiwum:
 
-https://github.com/phosphor-icons/web
-https://phosphoricons.com/
+```bash
+pnpm build:zip
+```
+
+## Icons
+
+Projekt korzysta z Phosphor Icons:
+- https://github.com/phosphor-icons/web
+- https://phosphoricons.com/

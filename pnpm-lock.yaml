@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@phosphor-icons/web':
-        specifier: ^2.1.2
-        version: 2.1.2
     devDependencies:
       '@biomejs/biome':
         specifier: 2.3.8
@@ -229,9 +225,6 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
-
-  '@phosphor-icons/web@2.1.2':
-    resolution: {integrity: sha512-rPAR9o/bEcp4Cw4DEeZHXf+nlGCMNGkNDRizYHM47NLxz9vvEHp/Tt6FMK1NcWadzw/pFDPnRBGi/ofRya958A==}
 
   '@rollup/rollup-android-arm-eabi@4.53.3':
     resolution: {integrity: sha512-mRSi+4cBjrRLoaal2PnqH82Wqyb+d3HsPUN/W+WslCXsZsyHa9ZeQQX/pQsZaVIWDkPcpV6jJ+3KLbTbgnwv8w==}
@@ -548,8 +541,6 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.12':
     optional: true
-
-  '@phosphor-icons/web@2.1.2': {}
 
   '@rollup/rollup-android-arm-eabi@4.53.3':
     optional: true
