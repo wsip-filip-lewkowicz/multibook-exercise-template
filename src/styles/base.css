@@ -1,7 +1,4 @@
-@import "./fonts.css";
-@import "./typography.css";
 @import "./modal.css";
-@import "./btn.css";
 
 :root {
 	--preview-modal-sm: 400px;
@@ -9,42 +6,11 @@
 	--preview-modal-large: 900px;
 	--preview-modal-fullscreen: calc(100vw - 32px);
 	--preview-modal-height-fullscreen: calc(100vh - 32px);
-
-	--color-white: #ffffff;
-
-	--color-primary-100: #e6eff9;
-	--color-primary-500: #005abe;
-
-	--color-text: #1a1f25;
-	--color-gray-700: #3d4855;
-	--color-gray-900: #1a1f25;
-
+	
 	--font-family: "Silka", sans-serif;
-
-	--btn-size: 40px;
-	--icon-size: 48px;
 }
 
 html {
 	font-family: var(--font-family);
-	color: var(--color-text);
 }
 
-.c-icon {
-	width: var(--icon-size);
-	aspect-ratio: 1 / 1;
-
-	flex-shrink: 0;
-
-	background-color: var(--color-primary-100);
-	color: var(--color-primary-500);
-
-	border-radius: 999px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.c-icon i {
-	font-size: 0.4em;
-}
