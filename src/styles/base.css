@@ -6,3 +6,10 @@ html {
 	font-family: var(--font-family);
 }
 
+body {
+	margin: 0;
+}
+
+main {
+	padding: 24px;
+}

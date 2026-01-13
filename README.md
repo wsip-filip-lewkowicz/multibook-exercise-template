@@ -18,6 +18,10 @@ import { sdk } from "@/sdk";
 sdk.emit("goToPage", { page: 5 });
 sdk.emit("exerciseCompleted", {});
 
+// Keyboard control
+sdk.emit("keyboardOpen", {});    // Request to open on-screen keyboard
+sdk.emit("keyboardClose", {});   // Request to close on-screen keyboard
+
 // Listen for events from parent
 sdk.on("keyboardPressed", ({ key }) => {
   console.log("Key pressed:", key);
@@ -34,6 +38,8 @@ sdk.on("keyboardPressed", ({ key }) => {
 | `goToPage`         | `{ page: number }` | Navigate to page            |
 | `closeModal`       | `{}`               | Close modal (from iframe)   |
 | `exerciseCompleted`| `{}`               | Exercise completed          |
+| `keyboardOpen`     | `{}`               | Request to open on-screen keyboard |
+| `keyboardClose`    | `{}`               | Request to close on-screen keyboard |
 
 #### parent -> iframe
 
@@ -69,6 +75,12 @@ window.addEventListener("message", (e) => {
       break;
     case "exerciseCompleted":
       console.log("Exercise completed");
+      break;
+    case "keyboardOpen":
+      console.log("Open on-screen keyboard");
+      break;
+    case "keyboardClose":
+      console.log("Close on-screen keyboard");
       break;
   }
 });

@@ -1,11 +1,6 @@
 import "./styles/base.css";
-import { sdk } from "@/sdk";
 import { initJsonTest } from "./jsonLoadTest.js";
-
-// Example: listen for keyboard events from parent
-sdk.on("keyboardPressed", ({ key }) => {
-	console.log("Key pressed:", key);
-});
+import { initKeyboard } from "./keyboard.js";
 
 // Initialize on DOM ready
 if (document.readyState === "loading") {
@@ -21,4 +16,5 @@ async function init() {
 		initPreview();
 	}
 	initJsonTest();
+	initKeyboard();
 }
