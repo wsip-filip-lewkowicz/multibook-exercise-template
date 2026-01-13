@@ -1,3 +1,12 @@
+/* CSS Variables for dev preview */
+:root {
+	--preview-modal-sm: 400px;
+	--preview-modal-default: 600px;
+	--preview-modal-large: 900px;
+	--preview-modal-fullscreen: calc(100vw - 32px);
+	--preview-modal-height-fullscreen: calc(100vh - 32px);
+}
+
 /* Dev Preview Mode - styluje <main> jako modal */
 body.dev-preview-mode {
 	background-color: #CCDEF280;

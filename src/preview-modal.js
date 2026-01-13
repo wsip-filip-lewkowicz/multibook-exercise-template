@@ -1,3 +1,5 @@
+import "./styles/modal.css";
+
 const PREVIEW_SIZES = [
 	{ value: "small", label: "Mały" },
 	{ value: "default", label: "Domyślny" },
