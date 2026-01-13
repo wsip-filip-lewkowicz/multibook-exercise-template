@@ -4,27 +4,27 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>multibook-exercise-template</title>
+    <title>Multibook Exercise Template</title>
 
-    <!-- Preconnect do zewnętrznych domen dla szybszego ładowania -->
+    <!-- Preconnect to external domains for faster loading -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link rel="preconnect" href="https://multibooks-tst.eduranga.pl" crossorigin />
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     <link rel="dns-prefetch" href="https://multibooks-tst.eduranga.pl" />
 
-    <!-- Preload krytycznych fontów -->
+    <!-- Preload critical fonts -->
     <link
       rel="preload"
       as="font"
       type="font/woff2"
-      href="https://multibooks-tst.eduranga.pl/backend/api/public-files/alias/silka-regular"
+      href="%VITE_STORAGE_URL%/api/public-files/alias/silka-regular"
       crossorigin="anonymous"
     />
     <link
       rel="preload"
       as="font"
       type="font/woff2"
-      href="https://multibooks-tst.eduranga.pl/backend/api/public-files/alias/silka-medium"
+      href="%VITE_STORAGE_URL%/api/public-files/alias/silka-medium"
       crossorigin="anonymous"
     />
 
@@ -35,7 +35,7 @@
       href="%VITE_STORAGE_URL%/api/public-files/global.css"
     />
 
-    <!-- Ładowanie CSS - Phosphor Icons -->
+    <!-- Phosphor Icons -->
     <link
       rel="stylesheet"
       type="text/css"
@@ -55,7 +55,7 @@
     <!-- Global CSS -->
     <link rel="stylesheet" type="text/css" href="%VITE_STORAGE_URL%/api/public-files/global.css" />
 
-    <!-- Definicje fontów -->
+    <!-- Fonts definitions -->
     <style>
       @font-face {
         font-family: "Silka";
@@ -105,7 +105,9 @@
       <div class="js-json-test"></div>
     </main>
 
+    <!-- Global JS -->
     <script src="%VITE_STORAGE_URL%/api/public-files/alias/global.js"></script>
+    <!-- Iframe resizer required for iframe height synchronization -->
     <script src="%VITE_STORAGE_URL%/api/public-files/alias/iframe-resizer"></script>
     <script type="module" src="/src/main.js"></script>
   </body>
