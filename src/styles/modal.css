@@ -26,7 +26,7 @@ body.dev-preview-mode > main {
 	background-color: #fff;
 	border: 1px solid #005ABE;
 	border-radius: 24px;
-	padding: clamp(16px, 2vw, 24px);
+	padding: 24px;
 	box-sizing: border-box;
 	flex: 0 0 auto;
 	position: relative;
@@ -79,38 +79,4 @@ body.dev-preview--fullscreen > main {
 	body.dev-preview--large > main {
 		width: 95vw;
 	}
-}
-
-/* Header komponentu */
-.c-header {
-	display: flex;
-	align-items: flex-start;
-	padding-right: 50px;
-}
-
-.c-header_icon.c-icon {
-	width: var(--icon-size);
-	font-size: var(--icon-size);
-}
-
-.c-header_inner {
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
-
-	@media (min-width: 640px) {
-		gap: 16px;
-		align-items: center;
-		flex-direction: row;
-	}
-}
-
-.c-header_actions {
-	position: absolute;
-	right: 16px;
-	top: 16px;
-}
-
-.c-header_actions .c-btn {
-	border-radius: 999px;
 }

@@ -6,6 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>multibook-exercise-template</title>
 
+    <!-- Preconnect do zewnętrznych domen dla szybszego ładowania -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://multibooks-tst.eduranga.pl" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://multibooks-tst.eduranga.pl" />
+
+    <!-- Preload krytycznych fontów -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="https://multibooks-tst.eduranga.pl/backend/api/public-files/alias/silka-regular"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="https://multibooks-tst.eduranga.pl/backend/api/public-files/alias/silka-medium"
+      crossorigin="anonymous"
+    />
+
+    <!-- Preload krytycznego CSS -->
+    <link
+      rel="preload"
+      as="style"
+      href="%VITE_STORAGE_URL%/api/public-files/global.css"
+    />
+
+    <!-- Ładowanie CSS - Phosphor Icons -->
     <link
       rel="stylesheet"
       type="text/css"
@@ -22,43 +52,64 @@
       href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css"
     />
 
-    <link rel="stylesheet" type="text/css" href="%VITE_PROXY_URL%/api/public-files/global.css" />
+    <!-- Global CSS -->
+    <link rel="stylesheet" type="text/css" href="%VITE_STORAGE_URL%/api/public-files/global.css" />
+
+    <!-- Definicje fontów -->
+    <style>
+      @font-face {
+        font-family: "Silka";
+        src: url("https://multibooks-tst.eduranga.pl/backend/api/public-files/alias/silka-regular") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      /* Weight 500 - Medium */
+      @font-face {
+        font-family: "Silka";
+        src: url("https://multibooks-tst.eduranga.pl/backend/api/public-files/alias/silka-medium") format("woff2");
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+    </style>
   </head>
   <body>
     <main>
 
       <div class="c-header">
-        <div class="c-header_inner">
-          <span class="c-header_icon c-icon">
+        <div class="c-header__icon">
+          <div class="c-featured-icon c-featured-icon--l c-featured-icon--brand">
             <i class="ph-bold ph-puzzle-piece"></i>
-          </span>
-          
-          <span class="c-header_title t-font-bold">
+          </div>
+        </div>
+        <div class="c-header__content">
+          <span class="c-header__title t-h2 t-font-medium">
             Przeciągnij brakujące fragmenty ilustracji w odpowiednie miejsca. Opowiedz, co przedstawia ilustracja.
           </span>
         </div>
 
-        <div class="c-header_actions">
-          <button class="js-modal-close c-btn c-btn--icon c-btn--ghost" data-modal-close><i class="ph-bold ph-x"></i></button>
-        </div>
-
+        <button class="c-header__close c-btn c-btn-icon c-btn-md c-btn-tertiary-ghost" data-modal-close>
+          <i class="ph-bold ph-x"></i>
+        </button>
       </div>
       <h3>Hello World</h3>
       
-      <button data-page="2">Go To Page 2</button>
-      <button data-page="5">Go To Page 5</button>
-      <button data-page="10">Go To Page 10</button>
+      <button class="c-btn c-btn-md c-btn-secondary-outline" data-page="2">Go To Page 2</button>
+      <button class="c-btn c-btn-md c-btn-secondary-outline" data-page="5">Go To Page 5</button>
+      <button class="c-btn c-btn-md c-btn-secondary-outline" data-page="10">Go To Page 10</button>
       
       
       <h3>Img test</h3>
-      <img src="/img/test.png"  style="width: 400px; "/>
+      <img src="./img/test.png"  style="width: 400px; "/>
 
       <h3>JSON test</h3>
       <div class="js-json-test"></div>
     </main>
 
-    <script src="%VITE_PROXY_URL%/api/public-files/global.js"></script>
-    <script src="%VITE_PROXY_URL%/js/iframe-resizer"></script>
+    <script src="%VITE_STORAGE_URL%/api/public-files/alias/global.js"></script>
+    <script src="%VITE_STORAGE_URL%/api/public-files/alias/iframe-resizer"></script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
