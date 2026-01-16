@@ -45,6 +45,25 @@ The preview modal (`src/preview-modal.js` + `src/styles/modal.css`) is **develop
 
 Preview mode adds CSS classes to body (`dev-preview-mode`, `dev-preview--{size}`) to simulate different modal sizes.
 
+### Virtual Keyboard (dev only)
+
+The virtual keyboard (`src/virtual-keyboard.js` + `src/styles/virtual-keyboard.css`) simulates the parent app's on-screen keyboard for testing SDK integration locally.
+
+**Key files:**
+- `src/virtual-keyboard.js` - Keyboard UI and logic (dev-only, dynamically imported)
+- `src/keyboard.js` - SDK event handler for `keyboardPressed` (always included)
+
+**Communication flow:**
+```
+Virtual Keyboard → postMessage({type: "multibook:event", event: "keyboardPressed"})
+    → SDK receives → keyboard.js handles (same path as production)
+```
+
+**Special key mappings:**
+- `Backspace`, `Delete` - character deletion
+- `ArrowLeft`, `ArrowRight` - cursor movement
+- ` ` (space) - space character
+
 ### Environment Configuration
 
 - `.env.development` - Test environment URLs (multibooks-tst.eduranga.pl)

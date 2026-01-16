@@ -1,0 +1,125 @@
+.virtual-keyboard {
+	position: fixed;
+	z-index: 100;
+	padding: 1.5rem;
+	background: #e8eef4;
+	border-radius: 1.5rem;
+	box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+	user-select: none;
+	min-width: 656px;
+	cursor: grab;
+}
+
+.virtual-keyboard:active {
+	cursor: grabbing;
+}
+
+.virtual-keyboard--hidden {
+	display: none;
+}
+
+/* Close button */
+.virtual-keyboard__close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	transform: translate(66%, -100%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+	border: none;
+	border-radius: 0.5rem;
+	background: #f3f4f6;
+	color: #374151;
+	cursor: pointer;
+	transition: background-color 0.15s;
+}
+
+.virtual-keyboard__close:hover {
+	background: #e5e7eb;
+}
+
+.virtual-keyboard__close:active {
+	background: #d1d5db;
+}
+
+.virtual-keyboard__close i {
+	font-size: 1rem;
+}
+
+/* Keyboard layout */
+.virtual-keyboard__rows {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.virtual-keyboard__row {
+	display: flex;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+/* Key buttons */
+.virtual-keyboard__key {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 3rem;
+	height: 3rem;
+	padding: 0;
+	border: none;
+	border-radius: 0.75rem;
+	background: white;
+	box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	font-family: inherit;
+	font-size: 1.125rem;
+	font-weight: 500;
+	color: #1f2937;
+	cursor: pointer;
+	transition: all 0.15s;
+	pointer-events: auto;
+}
+
+.virtual-keyboard__key:hover {
+	background: #f9fafb;
+}
+
+.virtual-keyboard__key:active {
+	transform: scale(0.95);
+	background: #f3f4f6;
+}
+
+/* Wide keys */
+.virtual-keyboard__key--wide {
+	width: 4rem;
+	font-size: 1rem;
+}
+
+/* Space key */
+.virtual-keyboard__key--space {
+	flex-grow: 1;
+	font-size: 1rem;
+}
+
+/* Action keys */
+.virtual-keyboard__key--action {
+	width: 4rem;
+	color: #1f2937;
+}
+
+.virtual-keyboard__key--action i {
+	font-size: 1.5rem;
+}
+
+/* Shift active state */
+.virtual-keyboard__key--shift-active {
+	background: #eff6ff;
+}
+
+.virtual-keyboard__key--shift-active:hover {
+	background: #dbeafe;
+}

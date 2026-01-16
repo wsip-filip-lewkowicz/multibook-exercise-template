@@ -10,10 +10,13 @@ if (document.readyState === "loading") {
 }
 
 async function init() {
-	// Preview modal only in dev mode - dynamic import ensures 0 bytes in prod
+	// Preview modal and virtual keyboard only in dev mode - dynamic import ensures 0 bytes in prod
 	if (import.meta.env.DEV) {
 		const { initPreview } = await import("./preview-modal.js");
 		initPreview();
+
+		const { initVirtualKeyboard } = await import("./virtual-keyboard.js");
+		initVirtualKeyboard();
 	}
 	initJsonTest();
 	initKeyboard();
