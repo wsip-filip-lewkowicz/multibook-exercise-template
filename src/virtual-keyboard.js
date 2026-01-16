@@ -37,8 +37,25 @@ export function initVirtualKeyboard() {
 		right: "ArrowRight",
 	};
 
-	// Keys that should not reset shift
-	const NON_SHIFT_KEYS = ["backspace", "delete-forward", "space", "left", "right"];
+	// Shift icon classes by state
+	const SHIFT_ICONS = {
+		off: "ph ph-arrow-fat-up",
+		single: "ph-fill ph-arrow-fat-up",
+		capslock: "ph-fill ph-arrow-fat-lines-up",
+	};
+
+	// Bottom row special keys configuration
+	const BOTTOM_ROW_KEYS = [
+		{ icon: "ph-fill ph-backspace", key: "backspace", variant: "action" },
+		{
+			icon: "ph-fill ph-backspace",
+			key: "delete-forward",
+			variant: "action",
+			style: "transform: rotate(180deg)",
+		},
+		{ icon: "ph ph-arrow-left", key: "left", variant: "action" },
+		{ icon: "ph ph-arrow-right", key: "right", variant: "action" },
+	];
 
 	// DOM elements
 	let keyboardEl = null;
@@ -88,11 +105,9 @@ export function initVirtualKeyboard() {
 			rowEl.className = "virtual-keyboard__row";
 
 			for (const key of row) {
-				const btn = createKeyButton(
-					keyboardMode === "letters" && isUppercase ? key.toUpperCase() : key,
-					key,
-				);
-				rowEl.appendChild(btn);
+				const label =
+					keyboardMode === "letters" && isUppercase ? key.toUpperCase() : key;
+				rowEl.appendChild(createKeyButton(label, key));
 			}
 
 			rowsContainer.appendChild(rowEl);
@@ -103,82 +118,36 @@ export function initVirtualKeyboard() {
 		bottomRow.className = "virtual-keyboard__row";
 
 		// Mode toggle (ABC/123)
-		const modeBtn = createKeyButton(
-			keyboardMode === "letters" ? "123" : "ABC",
-			keyboardMode === "letters" ? "123" : "ABC",
-			"wide",
-		);
-		bottomRow.appendChild(modeBtn);
+		const modeLabel = keyboardMode === "letters" ? "123" : "ABC";
+		bottomRow.appendChild(createKeyButton(modeLabel, modeLabel, "wide"));
 
 		// Shift
-		const shiftBtn = createKeyButton(
-			`<i class="${getShiftIcon()}"></i>`,
-			"shift",
-			"wide",
-			true,
-		);
+		const shiftBtn = createIconButton(SHIFT_ICONS[shiftState], "shift", "wide");
 		if (shiftState !== "off") {
 			shiftBtn.classList.add("virtual-keyboard__key--shift-active");
 		}
 		bottomRow.appendChild(shiftBtn);
 
 		// Space
-		const spaceBtn = createKeyButton("spacja", "space", "space");
-		bottomRow.appendChild(spaceBtn);
+		bottomRow.appendChild(createKeyButton("spacja", "space", "space"));
 
-		// Backspace
-		const backspaceBtn = createKeyButton(
-			'<i class="ph-fill ph-backspace"></i>',
-			"backspace",
-			"action",
-			true,
-		);
-		bottomRow.appendChild(backspaceBtn);
-
-		// Delete forward
-		const deleteBtn = createKeyButton(
-			'<i class="ph-fill ph-backspace" style="transform: rotate(180deg)"></i>',
-			"delete-forward",
-			"action",
-			true,
-		);
-		bottomRow.appendChild(deleteBtn);
-
-		// Arrow left
-		const leftBtn = createKeyButton(
-			'<i class="ph ph-arrow-left"></i>',
-			"left",
-			"action",
-			true,
-		);
-		bottomRow.appendChild(leftBtn);
-
-		// Arrow right
-		const rightBtn = createKeyButton(
-			'<i class="ph ph-arrow-right"></i>',
-			"right",
-			"action",
-			true,
-		);
-		bottomRow.appendChild(rightBtn);
+		// Action keys (backspace, delete, arrows)
+		for (const { icon, key, variant, style } of BOTTOM_ROW_KEYS) {
+			bottomRow.appendChild(createIconButton(icon, key, variant, style));
+		}
 
 		rowsContainer.appendChild(bottomRow);
 	}
 
 	// Create a key button
-	function createKeyButton(label, key, variant = "default", isHtml = false) {
+	function createKeyButton(label, key, variant = "default") {
 		const btn = document.createElement("button");
 		btn.type = "button";
 		btn.className = "virtual-keyboard__key";
+		btn.textContent = label;
 
 		if (variant !== "default") {
 			btn.classList.add(`virtual-keyboard__key--${variant}`);
-		}
-
-		if (isHtml) {
-			btn.innerHTML = label;
-		} else {
-			btn.textContent = label;
 		}
 
 		btn.addEventListener("mousedown", (e) => e.preventDefault());
@@ -190,46 +159,39 @@ export function initVirtualKeyboard() {
 		return btn;
 	}
 
-	// Get shift icon based on state
-	function getShiftIcon() {
-		switch (shiftState) {
-			case "single":
-				return "ph-fill ph-arrow-fat-up";
-			case "capslock":
-				return "ph-fill ph-arrow-fat-lines-up";
-			default:
-				return "ph ph-arrow-fat-up";
+	// Create an icon button
+	function createIconButton(iconClass, key, variant, style = "") {
+		const btn = createKeyButton("", key, variant);
+		const icon = document.createElement("i");
+		icon.className = iconClass;
+		if (style) {
+			icon.style.cssText = style;
 		}
+		btn.appendChild(icon);
+		return btn;
 	}
 
 	// Handle shift key with double-tap detection
 	function handleShift() {
 		const now = Date.now();
-		const timeSinceLastTap = now - lastShiftTap;
+		const isDoubleTap =
+			now - lastShiftTap < DOUBLE_TAP_THRESHOLD && shiftState === "single";
 
-		if (timeSinceLastTap < DOUBLE_TAP_THRESHOLD && shiftState === "single") {
-			// Double-tap: caps lock
+		if (isDoubleTap) {
 			shiftState = "capslock";
+		} else if (shiftState === "off") {
+			shiftState = "single";
 		} else {
-			// Single tap: cycle states
-			switch (shiftState) {
-				case "off":
-					shiftState = "single";
-					break;
-				case "single":
-				case "capslock":
-					shiftState = "off";
-					break;
-			}
+			shiftState = "off";
 		}
 
 		lastShiftTap = now;
 		renderKeys();
 	}
 
-	// Maybe reset shift after typing
+	// Maybe reset shift after typing (special keys don't reset shift)
 	function maybeResetShift(key) {
-		if (shiftState === "single" && !NON_SHIFT_KEYS.includes(key)) {
+		if (shiftState === "single" && !(key in KEY_MAP)) {
 			shiftState = "off";
 			renderKeys();
 		}
@@ -237,27 +199,22 @@ export function initVirtualKeyboard() {
 
 	// Handle key press
 	function handleKeyPress(key) {
+		// Handle shift key
 		if (key === "shift") {
 			handleShift();
 			return;
 		}
 
-		if (key === "ABC") {
-			keyboardMode = "letters";
-			renderKeys();
-			return;
-		}
-
-		if (key === "123") {
-			keyboardMode = "numbers";
+		// Handle mode switching
+		if (key === "ABC" || key === "123") {
+			keyboardMode = key === "ABC" ? "letters" : "numbers";
 			renderKeys();
 			return;
 		}
 
 		// Map special key or use character
-		const mappedKey = KEY_MAP[key];
 		const isUppercase = shiftState !== "off";
-		const char = mappedKey ?? (isUppercase ? key.toUpperCase() : key);
+		const char = KEY_MAP[key] ?? (isUppercase ? key.toUpperCase() : key);
 
 		// Send via postMessage to simulate parent communication
 		window.postMessage(
@@ -277,6 +234,9 @@ export function initVirtualKeyboard() {
 		keyboardEl.addEventListener("mousedown", (e) => {
 			// Ignore if clicking on buttons
 			if (e.target.closest("button")) return;
+
+			// Prevent focus loss from input field
+			e.preventDefault();
 
 			isDragging = true;
 			dragStart = {
@@ -334,24 +294,24 @@ export function initVirtualKeyboard() {
 		renderKeys();
 	}
 
-	// Hide keyboard
-	function hide() {
-		if (!isVisible) return;
+	// Hide keyboard visually (internal helper)
+	function hideVisually() {
+		if (!isVisible) return false;
 		isVisible = false;
 		keyboardEl.classList.add("virtual-keyboard--hidden");
+		return true;
+	}
 
-		// Emit close event so parent knows
-		sdk.emit("keyboardClose", {});
+	// Hide keyboard and notify parent
+	function hide() {
+		if (hideVisually()) {
+			sdk.emit("keyboardClose", {});
+		}
 	}
 
 	// Listen for SDK events
 	sdk.on("keyboardOpen", () => show());
-	sdk.on("keyboardClose", () => {
-		if (isVisible) {
-			isVisible = false;
-			keyboardEl.classList.add("virtual-keyboard--hidden");
-		}
-	});
+	sdk.on("keyboardClose", () => hideVisually());
 
 	// Create the keyboard UI
 	createKeyboardUI();

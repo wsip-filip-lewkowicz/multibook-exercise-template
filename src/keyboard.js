@@ -1,63 +1,86 @@
 import { sdk } from "@/sdk";
 
+const SELECTORS = {
+	keyboardOutput: ".js-keyboard-output",
+	keyboardOpen: "[data-keyboard-open]",
+	keyboardClose: "[data-keyboard-close]",
+};
+
+const KEY_ACTIONS = {
+	Backspace: () => deleteCharacter("backward"),
+	Delete: () => deleteCharacter("forward"),
+	ArrowLeft: () => moveCursor("backward"),
+	ArrowRight: () => moveCursor("forward"),
+};
+
 export function initKeyboard() {
-	const keyboardOutput = document.querySelector(".js-keyboard-output");
+	const keyboardOutput = document.querySelector(SELECTORS.keyboardOutput);
 
 	if (keyboardOutput) {
-		// Make output editable for cursor support
 		keyboardOutput.setAttribute("contenteditable", "true");
-
-		// Prevent default keyboard from showing on mobile
 		keyboardOutput.setAttribute("inputmode", "none");
-
-		// Focus on click to enable cursor positioning
-		keyboardOutput.addEventListener("click", () => {
-			keyboardOutput.focus();
-		});
+		keyboardOutput.addEventListener("click", () => keyboardOutput.focus());
 	}
 
-	// Listen for keyboard events from parent and display in output
 	sdk.on("keyboardPressed", ({ key }) => {
-		console.log("Key pressed:", key);
 		if (!keyboardOutput) return;
 
-		// Focus the output element to ensure execCommand works
 		keyboardOutput.focus();
 
-		switch (key) {
-			case "Backspace":
-				document.execCommand("delete", false);
-				break;
-			case "Delete":
-				document.execCommand("forwardDelete", false);
-				break;
-			case "ArrowLeft":
-				moveCursor(-1);
-				break;
-			case "ArrowRight":
-				moveCursor(1);
-				break;
-			default:
-				// Insert character (including space)
-				document.execCommand("insertText", false, key);
+		const action = KEY_ACTIONS[key];
+		if (action) {
+			action();
+		} else {
+			insertText(key);
 		}
 	});
 
-	// Keyboard open button
-	document.querySelector("[data-keyboard-open]")?.addEventListener("click", () => {
-		sdk.emit("keyboardOpen", {});
-	});
+	bindKeyboardButton(SELECTORS.keyboardOpen, "keyboardOpen");
+	bindKeyboardButton(SELECTORS.keyboardClose, "keyboardClose");
+}
 
-	// Keyboard close button
-	document.querySelector("[data-keyboard-close]")?.addEventListener("click", () => {
-		sdk.emit("keyboardClose", {});
+function bindKeyboardButton(selector, eventName) {
+	document.querySelector(selector)?.addEventListener("click", () => {
+		sdk.emit(eventName, {});
 	});
 }
 
-// Move cursor left or right
-function moveCursor(direction) {
+function getSelection() {
 	const sel = window.getSelection();
-	if (sel && sel.rangeCount > 0) {
-		sel.modify("move", direction > 0 ? "forward" : "backward", "character");
+	if (!sel || sel.rangeCount === 0) return null;
+	return sel;
+}
+
+function insertText(text) {
+	const sel = getSelection();
+	if (!sel) return;
+
+	const range = sel.getRangeAt(0);
+	range.deleteContents();
+
+	const textNode = document.createTextNode(text);
+	range.insertNode(textNode);
+	range.collapse(false);
+}
+
+function deleteCharacter(direction) {
+	const sel = getSelection();
+	if (!sel) return;
+
+	const range = sel.getRangeAt(0);
+
+	if (!range.collapsed) {
+		range.deleteContents();
+		range.collapse(true);
+		return;
 	}
+
+	sel.modify("extend", direction, "character");
+	const extendedRange = sel.getRangeAt(0);
+	extendedRange.deleteContents();
+	extendedRange.collapse(true);
+}
+
+function moveCursor(direction) {
+	getSelection()?.modify("move", direction, "character");
 }
