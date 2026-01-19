@@ -8,6 +8,7 @@ The SDK automatically:
 - Sends `ready` event to parent on load
 - Binds clicks on `[data-page]` elements
 - Binds clicks on `[data-modal-close]` elements
+- Binds clicks on `[data-tool-id]` elements
 
 ### Usage
 
@@ -40,12 +41,14 @@ sdk.on("keyboardPressed", ({ key }) => {
 | `exerciseCompleted`| `{}`               | Exercise completed          |
 | `keyboardOpen`     | `{}`               | Request to open on-screen keyboard |
 | `keyboardClose`    | `{}`               | Request to close on-screen keyboard |
+| `toolClicked`      | `{ tool: Tool }`   | Tool clicked in iframe      |
 
 #### parent -> iframe
 
 | Event             | Payload          | Description                          |
 | ----------------- | ---------------- | ------------------------------------ |
 | `keyboardPressed` | `{ key: string }` | Key pressed on on-screen keyboard   |
+| `init`            | `{ tools: Tool[], table_of_content: TocItem[] }` | Init data for tools/TOC |
 
 ### Message format
 
@@ -54,6 +57,55 @@ sdk.on("keyboardPressed", ({ key }) => {
   type: "multibook:event",
   event: "goToPage",
   payload: { page: 5 }
+}
+```
+
+### Domain types
+
+```ts
+type Tool = {
+  id: number
+  title: string
+  poster: SelectedAsset | null
+  zip_file: ZipFileData | null
+  created_at: string
+  updated_at: string
+}
+
+type TocItem = {
+  id: string
+  title: string
+  page: number | null
+  displayPage: number | null
+  contentType: "page" | "header"
+  isDisabled?: boolean
+  children: TocItem[]
+}
+
+type SelectedAsset = {
+  id: number
+  name: string
+  url: string | null
+  thumbnail_url: string | null
+  type: string
+  size: number | null
+  created_at: string
+  extension: string | null
+  alternative_text: string | null
+  folder_id: number | null
+  uploaded_by: {
+    id: string
+    name: string
+    email?: string
+  } | null
+}
+
+type ZipFileData = {
+  id: number
+  filename: string
+  index_path: string | null
+  status: "processing" | "completed" | "failed" | "cancelled"
+  error_message?: string | null
 }
 ```
 
@@ -91,6 +143,23 @@ iframe.contentWindow.postMessage({
   event: "keyboardPressed",
   payload: { key: "a" }
 }, "*");
+```
+
+```js
+// Example init payload from parent
+iframe.contentWindow.postMessage({
+  type: "multibook:event",
+  event: "init",
+  payload: {
+    tools: [],
+    table_of_content: []
+  }
+}, "*");
+```
+
+```js
+// Example tool click from iframe
+sdk.emit("toolClicked", { tool });
 ```
 
 ## Required Scripts

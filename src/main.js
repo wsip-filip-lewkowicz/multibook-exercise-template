@@ -1,4 +1,5 @@
 import "./styles/base.css";
+import { sdk } from "@/sdk";
 import { initJsonTest } from "./jsonLoadTest.js";
 import { initKeyboard } from "./keyboard.js";
 
@@ -20,4 +21,13 @@ async function init() {
 	}
 	initJsonTest();
 	initKeyboard();
+	initMultibookEvents();
+}
+
+function initMultibookEvents() {
+	sdk.on("init", ({ tools = [], table_of_content = [] } = {}) => {
+		console.log("[multibook:init]", { tools, table_of_content });
+		window.__multibookTools = tools;
+		window.__multibookToc = table_of_content;
+	});
 }

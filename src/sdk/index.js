@@ -2,6 +2,8 @@ const MESSAGE_TYPE = "multibook:event";
 
 class MultibookSDK {
 	#listeners = new Map();
+	#tools = [];
+	#tableOfContent = [];
 
 	constructor() {
 		this.#setupMessageListener();
@@ -21,7 +23,7 @@ class MultibookSDK {
 				event,
 				payload,
 			},
-			"*"
+			"*",
 		);
 	}
 
@@ -49,13 +51,17 @@ class MultibookSDK {
 			if (data?.type !== MESSAGE_TYPE) return;
 
 			const { event, payload } = data;
+			if (event === "init") {
+				this.#handleInit(payload);
+			}
+
 			const callbacks = this.#listeners.get(event);
 
-		if (callbacks) {
-			callbacks.forEach((cb) => {
-				cb(payload);
-			});
-		}
+			if (callbacks) {
+				callbacks.forEach((cb) => {
+					cb(payload);
+				});
+			}
 		});
 	}
 
@@ -68,6 +74,12 @@ class MultibookSDK {
 				return;
 			}
 
+			const toolTarget = e.target.closest("[data-tool-id]");
+			if (toolTarget) {
+				this.#emitToolClicked(toolTarget.dataset.toolId);
+				return;
+			}
+
 			const closeTarget = e.target.closest("[data-modal-close]");
 			if (closeTarget) {
 				this.emit("closeModal", {});
@@ -77,6 +89,19 @@ class MultibookSDK {
 
 	#emitReady() {
 		this.emit("ready", {});
+	}
+
+	#handleInit(payload) {
+		this.#tools = Array.isArray(payload?.tools) ? payload.tools : [];
+		this.#tableOfContent = Array.isArray(payload?.table_of_content)
+			? payload.table_of_content
+			: [];
+	}
+
+	#emitToolClicked(toolId) {
+		const tool = this.#tools.find((item) => String(item.id) === String(toolId));
+		if (!tool) return;
+		this.emit("toolClicked", { tool });
 	}
 }
 
