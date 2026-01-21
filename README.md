@@ -172,6 +172,30 @@ The iframe resizer script must be included in `index.html`:
 
 This enables automatic height synchronization with the parent window.
 
+### Canvas Exercises
+
+For exercises using `<canvas>`, iframe-resizer needs CSS dimensions to measure height correctly (canvas attributes alone are not enough):
+
+```js
+const CANVAS_W = 800;
+const CANVAS_H = 600;
+
+canvas.width = CANVAS_W;
+canvas.height = CANVAS_H;
+canvas.style.width = CANVAS_W + "px";
+canvas.style.height = CANVAS_H + "px";
+```
+
+Optionally, wrap the canvas in a container with `data-iframe-height` for precise measurement:
+
+```html
+<div data-iframe-height>
+  <canvas id="game"></canvas>
+</div>
+```
+
+**Important:** Avoid `height: 100%` on body/html - it can cause iframe-resizer measurement issues.
+
 ## Development
 
 Skopiuj `.env.example` do `.env` (usuń `.example` z nazwy) i uzupełnij wymagane wartości.
