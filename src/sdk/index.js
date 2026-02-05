@@ -4,6 +4,7 @@ class MultibookSDK {
 	#listeners = new Map();
 	#tools = [];
 	#tableOfContent = [];
+	#initPayload = null;
 
 	constructor() {
 		this.#setupMessageListener();
@@ -38,6 +39,11 @@ class MultibookSDK {
 			this.#listeners.set(event, new Set());
 		}
 		this.#listeners.get(event).add(callback);
+
+		// Replay init payload for late subscribers
+		if (event === "init" && this.#initPayload) {
+			callback(this.#initPayload);
+		}
 
 		return () => {
 			this.#listeners.get(event).delete(callback);
@@ -96,6 +102,7 @@ class MultibookSDK {
 		this.#tableOfContent = Array.isArray(payload?.table_of_content)
 			? payload.table_of_content
 			: [];
+		this.#initPayload = payload ?? {};
 	}
 
 	#emitToolClicked(toolId) {
